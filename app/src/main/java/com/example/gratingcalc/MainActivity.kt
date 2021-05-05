@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.energy).setText(String.format("%2.2f", 15.0))
         findViewById<EditText>(R.id.talbot_order).setText("1")
 
-        geometryGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+        geometryGroup.setOnCheckedChangeListener{ group, checkedId ->
             val checkedRadioButton = group.findViewById<View>(checkedId) as RadioButton
             val isChecked = checkedRadioButton.isChecked
             if (isChecked) {
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     geometry = Geometry.CONE3G
                 }
             }
-        })
+        }
 
         calculateButton.setOnClickListener{
             calculateWavelength()
@@ -80,56 +80,62 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateDistances(){
-        var nf = NumberFormat.getInstance()
+        val nf = NumberFormat.getInstance()
 
         val p1Eff = calculateEffectivePeriod()
         val wavelength = calculateWavelength()
         val talbotOrder = findViewById<EditText>(R.id.talbot_order).text.toString().toInt()
-        val p2 = nf.parse(findViewById<EditText>(R.id.g2_pitch).text.toString()).toFloat() / 1E6
+        val p2 = nf.parse(findViewById<EditText>(R.id.g2_pitch).text.toString())!!.toFloat() / 1E6
         val g1G2: Double
         val talbotDistance: Double
         val sourceG1: Double
         val g0G1: Double
         val p0: Double
 
-        if (geometry == Geometry.PARALLEL){
-            talbotDistance = ((talbotOrder * p1Eff.pow(2)) / (2 * wavelength))
-            result.text = getString(R.string.G1_G2).format(talbotDistance * 1000)
-        }
-        else if(geometry == Geometry.CONE2G){
-            g1G2 = ((talbotOrder * p1Eff * p2) / (2 * wavelength))
-            sourceG1 = ((g1G2 * p1Eff) / (p2 - p1Eff))
-            val resultString = getString(R.string.G1_G2).format(g1G2 * 1000) + "\n" + getString(R.string.source_G1).format(sourceG1 * 1000)
-            result.text = resultString
-        }
-        else if(geometry == Geometry.CONE3G){
-            p0 = p2 * p1Eff / (p2 - p1Eff)
-            g1G2 = ((talbotOrder * p1Eff * p2) / (2 * wavelength))
-            g0G1 = (p0 / p2 * g1G2)
-            val resultString = getString(R.string.G1_G2).format(g1G2 * 1000) + "\n" +  getString(R.string.G0_G1).format(g0G1 * 1000) + "\n" + getString(R.string.p0).format(p0 * 1E6)
-            result.text = resultString
+        when (geometry) {
+            Geometry.PARALLEL -> {
+                talbotDistance = ((talbotOrder * p1Eff.pow(2)) / (2 * wavelength))
+                result.text = getString(R.string.G1_G2).format(talbotDistance * 1000)
+            }
+            Geometry.CONE2G -> {
+                g1G2 = ((talbotOrder * p1Eff * p2) / (2 * wavelength))
+                sourceG1 = ((g1G2 * p1Eff) / (p2 - p1Eff))
+                val resultString = getString(R.string.G1_G2).format(g1G2 * 1000) + "\n" + getString(R.string.source_G1).format(sourceG1 * 1000)
+                result.text = resultString
+            }
+            Geometry.CONE3G -> {
+                p0 = p2 * p1Eff / (p2 - p1Eff)
+                g1G2 = ((talbotOrder * p1Eff * p2) / (2 * wavelength))
+                g0G1 = (p0 / p2 * g1G2)
+                val resultString = getString(R.string.G1_G2).format(g1G2 * 1000) + "\n" +  getString(R.string.G0_G1).format(g0G1 * 1000) + "\n" + getString(R.string.p0).format(p0 * 1E6)
+                result.text = resultString
+            }
         }
     }
 
     private fun calculateWavelength(): Double {
-        var nf = NumberFormat.getInstance()
+        val nf = NumberFormat.getInstance()
         val h = 6.62607015E-34 // J s
         val c = 299792458 // m/s
         val q = 1.602176634E-19 // J
-        val eInEv = nf.parse(findViewById<EditText>(R.id.energy).text.toString()).toDouble() * 1000
+        val eInEv = nf.parse(findViewById<EditText>(R.id.energy).text.toString())!!.toDouble() * 1000
         return (h*c) / (eInEv * q)
     }
 
     private fun calculateEffectivePeriod(): Double {
-        var nf = NumberFormat.getInstance()
+        val nf = NumberFormat.getInstance()
 
-        val period = nf.parse(findViewById<EditText>(R.id.g1_pitch).text.toString()).toFloat() / 1E6
-        return if (findViewById<RadioButton>(R.id.radio_pi).isChecked){
-            period / 2
-        } else if (findViewById<RadioButton>(R.id.radio_pihalf).isChecked) {
-            period
-        } else{
-            throw Exception("Phase shift not specified")
+        val period = nf.parse(findViewById<EditText>(R.id.g1_pitch).text.toString())!!.toFloat() / 1E6
+        return when {
+            findViewById<RadioButton>(R.id.radio_pi).isChecked -> {
+                period / 2
+            }
+            findViewById<RadioButton>(R.id.radioPiHalf).isChecked -> {
+                period
+            }
+            else -> {
+                throw Exception("Phase shift not specified")
+            }
         }
     }
 
