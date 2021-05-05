@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GratingCalc</string>
+    <string name="calculate">Calculate</string>
+    <string name="pitch_analyzer_grating_m">Pitch Analyzer Grating [µm]</string>
+    <string name="phase_shift">Phase shift</string>
+    <string name="design_energy_m">Design Energy [keV]</string>
+    <string name="pi">pi</string>
+    <string name="pi_2">pi/2</string>
+    <string name="parallel_beam">Parallel Beam</string>
+    <string name="fractional_talbot_order">Fractional talbot order</string>
+    <string name="cone_2_gratings">Cone 2 Gratings</string>
+    <string name="cone_3_gratings">Cone 3 Gratings</string>
+    <string name="pitch_phase_grating_m">Pitch Phase Grating [µm]</string>
+    <string name="p0">Pitch g0 [µm]: %f</string>
+    <string name="G0_G1">Distance G0 - G1 [mm]: %f</string>
+    <string name="G1_G2">Distance G1 - G2 [mm]: %f</string>
+    <string name="source_G1">Distance source - G1 [mm]: %f</string>
+</resources>

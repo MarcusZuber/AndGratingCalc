@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GratingCalc</string>
+    <string name="calculate">Berechnen</string>
+    <string name="pitch_analyzer_grating_m">Periode Analysegitter [µm]</string>
+    <string name="phase_shift">Phasenschub</string>
+    <string name="design_energy_m">Designenergie [keV]</string>
+    <string name="parallel_beam">Parallelstrahl</string>
+    <string name="cone_2_gratings">Kegel 2 Gitter</string>
+    <string name="cone_3_gratings">Kegel 3 Gitter</string>
+    <string name="pitch_phase_grating_m">Periode Phasengitter [µm]</string>
+    <string name="pi">pi</string>
+    <string name="pi_2">pi/2</string>
+    <string name="fractional_talbot_order">Fraktionale Talbotordnung</string>
+    <string name="p0">Periode g0 [µm]: %f</string>
+    <string name="G0_G1">Abstand G0 - G1 [mm]: %f</string>
+    <string name="G1_G2">Abstand G1 - G2 [mm]: %f</string>
+    <string name="source_G1">Abstand Quelle - G1 [mm]: %f</string>
+</resources>
