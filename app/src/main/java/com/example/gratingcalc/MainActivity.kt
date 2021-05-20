@@ -1,6 +1,8 @@
 package com.example.gratingcalc
 
+import android.icu.text.DecimalFormatSymbols
 import android.os.Bundle
+import android.text.method.DigitsKeyListener
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         g1Pitch = findViewById(R.id.g1_pitch)
         g2Pitch = findViewById(R.id.g2_pitch)
+
+        val separator = DecimalFormatSymbols.getInstance().decimalSeparator
+
+        g1Pitch.keyListener = DigitsKeyListener.getInstance("0123456789$separator")
+        g2Pitch.keyListener = DigitsKeyListener.getInstance("0123456789$separator")
+        findViewById<EditText>(R.id.energy).keyListener = DigitsKeyListener.getInstance("0123456789$separator")
+
         result = findViewById(R.id.result)
 
         // initialize for parallel geometry
